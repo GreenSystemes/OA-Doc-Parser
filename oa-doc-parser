@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+include_once('src/bootstrap.php');
+
+use OADP\ArgParser;
+use OADP\AutoloadReader;
+use OADP\ClassParser;
+
+//Does argv exists ?
+if( $argv === null ) {
+    echo "Problem : argv not found\n";
+    exit(1);
+}
+
+//Parse args
+$argParser = ArgParser::extractArgs( $argv );
+if( $argParser === null ) {
+    echo "Problem : can't parse\n";
+    exit(1);
+}
+$error = $argParser->hasError();
+if( $error !== null ) {
+    echo $error . "\n";
+    exit(1);
+}
+
+//Find all class in autoloader
+$autoloadReader = AutoloadReader::load();
+if( $autoloadReader === null ) {
+    echo "Problem : can't load\n";
+    exit(1);
+}
+
+$error = $autoloadReader->hasError();
+if( $error !== null ) {
+    echo $error . "\n";
+    exit(1);
+}
+
+//Swagger generator
+if( ! ( ClassParser::extractData( $autoloadReader->getPsr4Classes( $argParser->getPSR4() ) ) )->generateSwagger( $argParser ) ) {
+    echo "Error while writing file !\n";
+    exit(1);
+}
+
+exit(0);
