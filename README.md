@@ -25,6 +25,7 @@ Features :
 ## TODO
 
  - [ ] Make tests !
+ - [ ] Check OpenApi `$ref` are valid.
 
 ## Usage
 
