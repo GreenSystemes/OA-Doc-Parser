@@ -1,6 +1,26 @@
 # OpenApi Doc Parser
 
-*Need PHP 7.4 to run !*
+OpenApi Doc Parser can extract OpenApi from your PHP code. This program is in case of PHP code isn't generate from OpenApi specification. Why is it usefull :
+
+ - You don't have to update an OpenApi file from a change in PHP code (vice-versa);
+ - Simple usage;
+ - Json PHP base extension is needed, no external dependencies at runtime. Just PHPUnit for tests;
+ - Scan your PSR4 namespaces thanks to your `composer.json`;
+ - OpenApi documentations must be write in *yaml* file format.
+ 
+*Need PHP 7.4 to run ! Why ? Just to make the code bugless and more readable*.
+
+Actually, the tool respond to our usage. But, you can make a PR if you see missing feature.
+
+Features :
+
+ - Can take a Swagger base file;
+ - Create components;
+ - Properties documentation of components can be add in class properties documentations;
+ - Work with enum components;
+ - Detect dupplicates components;
+ - Create routes;
+ - Detect dupplicate routes.
 
 ## TODO
 
@@ -8,13 +28,18 @@
 
 ## Usage
 
-
     ./oa-doc-parser
             --composer ./path/to/your/composer.json
             --swagger-header ./path/to/your/swagger-header.yml
             --swagger-output ./path/to/your/output-swagger.yml
 
-Your `swagger-header.yml` need to contains :
+All parameters are required :
+
+ - `--composer` : Your composer file. Used to extract your PSR4 namespaces;
+ - `--swagger-header` : Your Swagger PSR4 header file. See below for more information;
+ - `--swagger-output` : File that will be write by this tool. If file exists, it will be overwrite.
+
+Your `swagger-header.yml` need to contain :
 
  - Open Api version
  - `info` object
