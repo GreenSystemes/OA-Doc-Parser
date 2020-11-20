@@ -18,9 +18,11 @@ Features :
  - Create components;
  - Properties documentation of components can be add in class properties documentations;
  - Work with enum components;
- - Detect dupplicates components;
+ - Detect duplicates components;
  - Create routes;
- - Detect dupplicate routes.
+ - Detect duplicate routes;
+ - Make partial Swagger with properties flagged (partial swagger for some customers for example);
+ - Configuration file.
 
 ## TODO
 
@@ -29,18 +31,55 @@ Features :
 
 ## Usage
 
+### Command line
+
     ./oa-doc-parser
             --composer ./path/to/your/composer.json
             --swagger-header ./path/to/your/swagger-header.yml
             --swagger-output ./path/to/your/output-swagger.yml
 
-All parameters are required :
+Required parameters :
 
  - `--composer` : Your composer file. Used to extract your PSR4 namespaces;
  - `--swagger-header` : Your Swagger PSR4 header file. See below for more information;
  - `--swagger-output` : File that will be write by this tool. If file exists, it will be overwrite.
 
-Your `swagger-header.yml` need to contain :
+Optional parameter :
+
+ - `--tag` : Can be used more that one time. Define tag use filter component and route for partial swagger.
+
+### Configuration file
+
+    ./oa-doc-parser
+            --conf ./path/to/your/OA-Doc-Parser.json
+
+Your `OA-Doc-Parser.json` should be define as :
+
+    {
+        "composer": "./path/to/your/composer.json",
+        "swagger": {
+            "header": "./path/to/your/swagger-header.yml",
+            "output": "./path/to/your/output-swagger.yml",
+            "partial": [
+                "TAG1", "TAG2"
+            ]
+        }
+    }
+
+Required parameters :
+
+ - `composer` : Your composer file. Used to extract your PSR4 namespaces;
+ - `swagger.header` : Your Swagger PSR4 header file. See below for more information;
+ - `swagger.output`: File that will be write by this tool. If file exists, it will be overwrite.
+
+
+Optional parameter :
+
+ - `swagger.partial` : String array, define tag use filter component and route for partial swagger.
+
+### Swagger header
+
+Your `swagger-header.yml` must be write in *YAML* and need to contains :
 
  - Open Api version
  - `info` object
@@ -168,6 +207,16 @@ Path for that method
      * @OA-Path-End
      */
 
+#### @OA-Partial-Tags
+
+List of tags used if partial tags are defined in configuration.
+
+You can name you tags by respecting that regex `[A-Za-z0-9_-]`. Space separate tags
+
+    /**
+     * @OA-Partial-Tags CustomerApi AcmeCompanyApi
+     */
+
 ### Examples
 
 #### Controller
@@ -178,6 +227,7 @@ Path for that method
         /**
          * @OA-Method GET
          * @OA-Path /acme/users/{id}
+         * @OA-Partial-Tags CustomerApi AcmeCompanyApi
          * @OA-Path-Begin
          * tags:
          * - Users
