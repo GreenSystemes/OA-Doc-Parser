@@ -2,7 +2,8 @@
 
 namespace OADP;
 
-class Component {
+class Component
+{
     /**
      * Name extract from @OA-Name
      */
@@ -19,26 +20,31 @@ class Component {
      */
     private array $componentProperties;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->name = '';
         $this->componentDetail = '';
         $this->componentProperties = array();
     }
 
-    public function getName() : string {
+    public function getName() : string
+    {
         return $this->name;
     }
 
-    public function setName(string $name) : self {
+    public function setName(string $name) : self
+    {
         $this->name = $name;
         return $this;
     }
 
-    public function getComponentDetail() : string {
+    public function getComponentDetail() : string
+    {
         return $this->componentDetail;
     }
 
-    public function setComponentDetail(string $componentDetail) : self {
+    public function setComponentDetail(string $componentDetail) : self
+    {
         $this->componentDetail = $componentDetail;
         return $this;
     }
@@ -46,35 +52,40 @@ class Component {
     /**
      * @return string[]
      */
-    public function getComponentProperties() : array {
-        return $this->name;
+    public function getComponentProperties() : array
+    {
+        return $this->componentProperties;
     }
 
-    public function addComponentProperty(string $componentProperty) : self {
-        $this->componentProperties[] = $componentProperty;
+    public function addComponentProperty(string $componentProperty) : self
+    {
+        array_push($this->componentProperties, $componentProperty);
         return $this;
     }
 
     /**
-     * @param $componentProperties string[]
+     * @param string[] $componentProperties
      */
-    public function setComponentProperties(array $componentProperties) : self {
+    public function setComponentProperties(array $componentProperties) : self
+    {
         $this->componentProperties = $componentProperties;
         return $this;
     }
 
-    public function isValid() : bool {
+    public function isValid() : bool
+    {
         return $this->getName() === '' || $this->getComponentDetail() === '';
     }
 
     /**
      * Generate YAML from object data
      */
-    public function __toString() : string {
+    public function __toString() : string
+    {
         $myOut = '    ' . $this->getName() . ':' . PHP_EOL . $this->getComponentDetail() . PHP_EOL;
 
-        if( ! empty( $this->componentProperties ) ) {
-            $myOut .= '      properties:' . PHP_EOL . implode( PHP_EOL, $this->componentProperties );
+        if (! empty($this->componentProperties)) {
+            $myOut .= '      properties:' . PHP_EOL . implode(PHP_EOL, $this->componentProperties);
         }
 
         return $myOut;

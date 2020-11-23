@@ -1,0 +1,11 @@
+parameters:
+    level: 6
+    excludes_analyse:
+        - test/*
+    reportUnmatchedIgnoredErrors: false
+    inferPrivatePropertyTypeFromConstructor: true
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Method OADP\\AutoloadReader::getClassLoader\(\) has no return typehint specified.#'
+        - '#Undefined variable: \$argv#'

@@ -46,7 +46,7 @@ Required parameters :
 
 Optional parameter :
 
- - `--tag` : Can be used more that one time. Define tag use filter component and route for partial swagger.
+ - `--tag` : Can be used more that one time. Define tag use filter component and route for partial swagger. If no `--tag` set, no filtering will be made.
 
 ### Configuration file
 
@@ -75,7 +75,7 @@ Required parameters :
 
 Optional parameter :
 
- - `swagger.partial` : String array, define tag use filter component and route for partial swagger.
+ - `swagger.partial` : String array, define tag use filter component and route for partial swagger. If no `swagger.partial` set, no filtering will be made.
 
 ### Swagger header
 
@@ -214,7 +214,7 @@ List of tags used if partial tags are defined in configuration.
 You can name you tags by respecting that regex `[A-Za-z0-9_-]`. Space separate tags
 
     /**
-     * @OA-Partial-Tags CustomerApi AcmeCompanyApi
+     * @OA-Partial-Tags CustomerApi AcmeCompanyApi BackOfficeApi
      */
 
 ### Examples
@@ -323,3 +323,7 @@ You can name you tags by respecting that regex `[A-Za-z0-9_-]`. Space separate t
     class MyEnum {
         //Some things
     }
+
+## Tests
+
+    docker run -ti --rm -v `pwd`:/home/builder tracesoftware/gitlab-builder:php7-cli composer install && composer all

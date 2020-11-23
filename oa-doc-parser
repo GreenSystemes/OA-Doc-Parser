@@ -39,7 +39,7 @@ if( $error !== null ) {
 }
 
 //Swagger generator
-if( ! ( ClassParser::extractData( $autoloadReader->getPsr4Classes( $argParser->getPSR4() ) ) )->generateSwagger( $argParser ) ) {
+if( ! ( ClassParser::extractData( $autoloadReader->getPsr4Classes( $argParser->getPSR4() ), $argParser->getTags() ) )->generateSwagger( $argParser ) ) {
     echo "Error while writing file !\n";
     exit(1);
 }
