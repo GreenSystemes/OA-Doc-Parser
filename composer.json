@@ -11,6 +11,16 @@
       "homepage": "https://github.com/GreenSystemes"
     }
   ],
+  "scripts": {
+    "php-cs-fixer": [
+      "@php-cs-fixer-src",
+      "php-cs-fixer-entry"
+    ],
+    "php-cs-fixer-src": "php-cs-fixer fix src -v --dry-run",
+    "php-cs-fixer-entry": "php-cs-fixer fix oa-doc-parser -v --dry-run",
+    "phpstan": "phpstan analyse -l 5 src oa-doc-parser",
+    "test": "phpunit test"
+  },
   "autoload": {
     "psr-4": {
       "OADP\\": "src/"
@@ -21,6 +31,8 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7"
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "phpunit/phpunit": "^9",
+    "phpstan/phpstan": "^0.12.23"
   }
 }
