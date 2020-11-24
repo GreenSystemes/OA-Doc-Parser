@@ -10,13 +10,15 @@ class ArgParser
 
     public const ARG_KEY_COMPOSER = "--composer";
 
+    public const ARG_KEY_AUTOLOAD = "--autoload";
+
     public const ARG_KEY_SWAGGER_HEADER = "--swagger-header";
 
     public const ARG_KEY_SWAGGER_OUTPUT = "--swagger-output";
 
     public static function isDefinedArgs(string $args) : bool
     {
-        return in_array($args, array( self::ARG_KEY_CONF, self::ARG_KEY_TAG, self::ARG_KEY_COMPOSER, self::ARG_KEY_SWAGGER_HEADER, self::ARG_KEY_SWAGGER_OUTPUT ));
+        return in_array($args, array( self::ARG_KEY_AUTOLOAD, self::ARG_KEY_CONF, self::ARG_KEY_TAG, self::ARG_KEY_COMPOSER, self::ARG_KEY_SWAGGER_HEADER, self::ARG_KEY_SWAGGER_OUTPUT ));
     }
 
     /**
@@ -40,6 +42,11 @@ class ArgParser
     private ?string $swaggerOutputPath;
 
     /**
+     * Path of output swagger path. Full from / root
+     */
+    private ?string $autoloadPath;
+
+    /**
      * Tags required for parsing
      */
     private array $tags;
@@ -54,6 +61,7 @@ class ArgParser
         $this->swaggerHeaderPath = null;
         $this->swaggerOutputPath = null;
         $this->confFilePath = null;
+        $this->autoloadPath = null;
         $this->program = null;
         $this->psr4 = array();
         $this->tags = array();
@@ -78,6 +86,12 @@ class ArgParser
     {
         return $this->swaggerOutputPath;
     }
+
+    public function getAutoloadPath() : ?string
+    {
+        return $this->autoloadPath;
+    }
+
 
     public function getPSR4() : array
     {
@@ -137,6 +151,10 @@ class ArgParser
             if (isset($myConfFileContent['swagger']['tags'])) {
                 $this->tags = $myConfFileContent['swagger']['tags'];
             }
+
+            if( isset($myConfFileContent['autoload']) && is_string($myConfFileContent['autoload']) ) {
+                $this->autoloadPath = $myConfFileContent['autoload'];
+            }
         }
 
         //composer.json is valid ?
@@ -175,6 +193,10 @@ class ArgParser
             return 'Can\'t write in : ' . $this->getSwaggerOutputPath();
         }
 
+        if( $this->getAutoloadPath() !== null && ! is_file( $this->getAutoloadPath() ) ) {
+            return 'Can\'t read autoload in : ' . $this->getAutoloadPath();
+        }
+
         return null;
     }
 
@@ -184,7 +206,7 @@ class ArgParser
      */
     public function getUsage(string $args0) : string
     {
-        return "Usage : \n" . $args0 . " " . self::ARG_KEY_COMPOSER . " ./path/to/your/composer.json " . self::ARG_KEY_SWAGGER_HEADER . " ./path/to/your/swagger-header.yml " . self::ARG_KEY_SWAGGER_OUTPUT . " ./path/to/your/output-swagger.yml\n" . $args0 . " " . self::ARG_KEY_CONF . " ./path/to/your/OA_Doc_Parser.json";
+        return "Usage : \n" . $args0 . " " . self::ARG_KEY_COMPOSER . " ./path/to/your/composer.json " . self::ARG_KEY_SWAGGER_HEADER . " ./path/to/your/swagger-header.yml " . self::ARG_KEY_SWAGGER_OUTPUT . " ./path/to/your/output-swagger.yml " . self::ARG_KEY_AUTOLOAD . " ./path/to/your/autoload.php\n" . $args0 . " " . self::ARG_KEY_CONF . " ./path/to/your/OA_Doc_Parser.json";
     }
 
     /**
@@ -217,7 +239,12 @@ class ArgParser
                     if ($i < $myArgsCount && ! self::isDefinedArgs($args[$i])) {
                         $myArgParser->confFilePath = $args[$i];
                     }
-                } elseif ($args[$i] === self::ARG_KEY_TAG) {
+                } elseif ($args[$i] === self::ARG_KEY_AUTOLOAD) {
+                    $i++;
+                    if ($i < $myArgsCount && ! self::isDefinedArgs($args[$i])) {
+                        $myArgParser->autoloadPath = $args[$i];
+                    }
+                }elseif ($args[$i] === self::ARG_KEY_TAG) {
                     $i++;
                     if ($i < $myArgsCount && ! self::isDefinedArgs($args[$i])) {
                         $myArgParser->tags[] = $args[$i];

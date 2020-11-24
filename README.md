@@ -46,7 +46,8 @@ Required parameters :
 
 Optional parameter :
 
- - `--tag` : Can be used more that one time. Define tag use filter component and route for partial swagger. If no `--tag` set, no filtering will be made.
+ - `--tag` : Can be used more that one time. Define tag use filter component and route for partial swagger. If no `--tag` set, no filtering will be made;
+ - `--autoload` : Path to `autoload.php` in vendor directory.
 
 ### Configuration file
 
@@ -57,6 +58,7 @@ Your `OA-Doc-Parser.json` should be define as :
 
     {
         "composer": "./path/to/your/composer.json",
+        "autoload": "./path/to/your/autoload.php",
         "swagger": {
             "header": "./path/to/your/swagger-header.yml",
             "output": "./path/to/your/output-swagger.yml",
@@ -75,7 +77,8 @@ Required parameters :
 
 Optional parameter :
 
- - `swagger.partial` : String array, define tag use filter component and route for partial swagger. If no `swagger.partial` set, no filtering will be made.
+ - `swagger.partial` : String array, define tag use filter component and route for partial swagger. If no `swagger.partial` set, no filtering will be made;
+ - `autoload` : Path to `autoload.php` in vendor directory.
 
 ### Swagger header
 

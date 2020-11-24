@@ -24,20 +24,24 @@ class AutoloadReader
         return $this->classLoader;
     }
 
-    public static function load() : ?AutoloadReader
+    public static function load( ?string $autoloadPath = null ) : ?AutoloadReader
     {
+        $myPaths = array(
+            __DIR__ . '/../../vendor/autoload.php',
+            __DIR__ . '/../vendor/autoload.php',
+            __DIR__ . '/../../autoload.php',
+            __DIR__ . '/../autoload.php',
+            __DIR__ . '/vendor/autoload.php',
+            __DIR__ . '/autoload.php'
+        );
+
+        if( $autoloadPath !== null ) {
+            $myPaths[] = $autoloadPath;
+        }
+
         //Autoload.php OK ?
         $myAutoloadReader = null;
-        foreach (
-            array(
-                __DIR__ . '/../../vendor/autoload.php',
-                __DIR__ . '/../vendor/autoload.php',
-                __DIR__ . '/../../autoload.php',
-                __DIR__ . '/../autoload.php',
-                __DIR__ . '/vendor/autoload.php',
-                __DIR__ . '/autoload.php'
-            )
-            as $file) {
+        foreach ( $myPaths as $file) {
             if (is_file($file)) {
                 $myAutoloadReader = new AutoloadReader();
                 $myAutoloadReader->classLoaderFile = $file;

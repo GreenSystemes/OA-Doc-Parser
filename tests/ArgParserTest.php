@@ -13,6 +13,7 @@ class ArgParserTest extends TestCase
         self::assertNull( $myArgParser->getConfFilePath() );
         self::assertNull( $myArgParser->getSwaggerHeaderPath() );
         self::assertNull( $myArgParser->getSwaggerOutputPath() );
+        self::assertNull( $myArgParser->getAutoloadPath() );
         self::assertEmpty( $myArgParser->getPSR4() );
         self::assertEmpty( $myArgParser->getTags() );
         self::assertFalse( $myArgParser->isArgsValid() );
