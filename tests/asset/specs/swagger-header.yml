@@ -1,0 +1,14 @@
+openapi: 3.0.0
+
+info:
+  title: OaDocParserTesting
+  description: Fake Api
+  version: 1.42.4
+
+
+servers:
+    - url: https://foo.bar.greensystemes.com
+
+tags:
+  - name: Bar
+    description: Bar API

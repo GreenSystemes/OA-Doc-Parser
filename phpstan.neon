@@ -8,4 +8,3 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Method OADP\\AutoloadReader::getClassLoader\(\) has no return typehint specified.#'
-        - '#Undefined variable: \$argv#'

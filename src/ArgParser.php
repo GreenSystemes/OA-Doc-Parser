@@ -165,13 +165,12 @@ class ArgParser
             return $this->getSwaggerHeaderPath() . " not found";
         }
 
-        $swaggerHeaderContent = file_get_contents($this->getSwaggerHeaderPath());
-        if ($swaggerHeaderContent === false) {
+        $mySwaggerHeaderContent = file_get_contents($this->getSwaggerHeaderPath());
+        if ($mySwaggerHeaderContent === false) {
             return "Can't read " . $this->getSwaggerHeaderPath();
         }
 
         //output-swagger.yml is valid ?
-        $swaggerOutput = $argv[3];
         if (file_put_contents($this->getSwaggerOutputPath(), '') === false) {
             return 'Can\'t write in : ' . $this->getSwaggerOutputPath();
         }

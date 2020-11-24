@@ -1,0 +1,8 @@
+{
+    "composer": "./composer.json",
+    "swagger": {
+        "header": "./specs/swagger-header.yml",
+        "output": "./specs/swagger.inc.yml",
+        "partial": []
+    }
+}
