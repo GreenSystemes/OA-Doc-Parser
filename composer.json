@@ -37,6 +37,11 @@
         "@check-future-php",
         "@test-unit"
       ],
+      "lint" : [
+        "@fix-psr2",
+        "@phpstan",
+        "@check-future-php"
+      ],
       "fix-psr2" : "./vendor/bin/php-cs-fixer fix src/ --config=.php_cs",
       "check-future-php": "./vendor/bin/phpcs -p src/ --standard=PHPCompatibility --runtime-set testVersion 8.0",
       "phpstan": "./vendor/bin/phpstan analyse -l 6 -c phpstan.neon src/ ",
